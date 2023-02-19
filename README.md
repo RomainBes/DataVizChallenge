@@ -18,13 +18,23 @@ P.S.: Originaly, functionalities were developed for brithway2 and relied on lca_
 
 You can find below some data visualization realised with the dbex toolbox.
 
+A graph for a simple comparison of carbon footprint:
+
 ![image info](plot/Carbon_Footprints_comparison.png)
+
+A graph for a multricriteria LCA comparison:
 
 ![image info](plot/multi_LCA_comparison.png)
 
+A graph for contribution analysis by susbtances and processes:
+
 ![image info](plot/contribution_analysis_example.png)
 
+And finally, an amazing interactive dashboard!!
+
 ![image info](plot/Dashboard_2.png)
+
+The dashboard function is taking a very very long time to run due the adapted GraphTraversal function that should not take that long. So there is a huge potential to improve the calculation and also the features of the vizualisation!
 
 ## License
 [MIT License](https://github.com/RomainBes/DataVizChallenge/blob/main/LICENSE.md)
