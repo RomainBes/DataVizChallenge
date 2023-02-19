@@ -5,6 +5,7 @@ from JRC_GraphTraversal import JRCAssumedDiagonalGraphTraversal
 from dash import Dash, dash_table, dcc, html
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
+import bw2data as bd
 
 
 def separate_multiple_parent(df):
@@ -180,7 +181,7 @@ def plot_WaterFall(trav, unit):
 def calculate_DashBoard(lca, cutoff):
 
     trav = JRCAssumedDiagonalGraphTraversal().calculate(lca, cutoff=cutoff)
-    print('Trasversal diagonal calculated.')
+    print("Trasversal diagonal calculated.")
     # name for the activities from activity_dict
     id_to_key = {v: k for k, v in lca.activity_dict.items()}
     activities = {
@@ -222,7 +223,7 @@ def calculate_DashBoard(lca, cutoff):
     df = pd.DataFrame.from_dict(data)
 
     df = separate_multiple_parent(df)
-    print('Multiple parent separated.')
+    print("Multiple parent separated.")
 
     data = df.to_dict(orient="list")
 
@@ -230,13 +231,13 @@ def calculate_DashBoard(lca, cutoff):
     unit = bd.Method(method).metadata["unit"]
 
     fig_sunburst_pos, fig_sunburst_neg = plot_Sunbursts(df, unit)
-    print('Sunburst ready.')
+    print("Sunburst ready.")
 
     fig_waterfall = plot_WaterFall(trav, unit)
-    print('Waterfall redy.')
+    print("Waterfall redy.")
 
     fig_sankey = plot_Sankey(df, unit)
-    print('Sankey ready.')
+    print("Sankey ready.")
 
     return df, lca, fig_sunburst_pos, fig_sunburst_neg, fig_waterfall, fig_sankey
 
@@ -351,5 +352,4 @@ def plot_DashBoard(
         ],
     )
 
-    if __name__ == "__main__":
-        app.run_server(port=8058, debug=True, use_reloader=False)
+    return app
