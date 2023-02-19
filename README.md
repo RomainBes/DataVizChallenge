@@ -24,7 +24,7 @@ You can find below some data visualization realised with the dbex toolbox.
 
 ![image info](plot/contribution_analysis_example.png)
 
-![image info](plot/DashBoard_2.png)
+![image info](plot/Dashboard_2.png)
 
 ## License
 [MIT License](https://github.com/RomainBes/DataVizChallenge/blob/main/LICENSE.md)
