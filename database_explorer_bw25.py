@@ -20,6 +20,8 @@ import bw2calc as bwc
 import bw2io as bwio
 from IPython.display import display
 
+from dashboard_functions import calculate_DashBoard, plot_DashBoard
+
 # Default impact categories
 methods_EF = [
     m
@@ -328,6 +330,32 @@ class list_act:
         if save:
             pdf.close()
 
+    def DashBoard(self, i, method, cutoff, amount=1):
+        act = self.list_act[i]
+        print(act)
+        print(method)
+
+        lca = bwc.LCA({act: amount}, method)
+        lca.lci()
+        lca.lcia()
+
+        print(lca.score)
+
+        (
+            df,
+            lca,
+            fig_sunburst_pos,
+            fig_sunburst_neg,
+            fig_waterfall,
+            fig_sankey,
+        ) = calculate_DashBoard(lca, cutoff)
+
+        app = plot_DashBoard(
+            df, lca, fig_sunburst_pos, fig_sunburst_neg, fig_waterfall, fig_sankey
+        )
+        return app
+
+    # Functions prior to the dashboard
     def plot_sankey(self, i, method, cutoff, amount=1):
         act = self.list_act[i]
         lca = bwc.LCA({act: amount}, method)
