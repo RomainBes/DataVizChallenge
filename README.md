@@ -1,16 +1,43 @@
-# Contribution Analysis
+# Database explorer
 
-This is a demo of a [`plotly`](https://dash.plotly.com/) dash visualisation based on [`brightway2`](https://brightway.dev) LCA calculations.
+## Description
+Database explorer is a toolbox designed to help explore and analyze the content of a database on a given topic.
 
-It was written for brightway2.5 and uses a modifiied version of the "AssumedDiagonalGraphTraversal" to obtain contributions of nodes and edges, and then splits those contribution into upstream paths to be able to create sunburst diagrams.
+This toolbox includes functions to:
+- explore the datasets contained into a database
+- analyze the difference between those datasets in terms of inventories and impacts
+- do some contribution analysis in terms of substances and processes (however, we lose the tree representation on these graphs)
+- get an interactive dashboard to analyze the impact chain of an activity. You then get sunburst representations of respectively positive and negative impacts. Those positive and negative impacts are also represented on a waterfall. Finally, you also have an interactive sankey diagram.
+
+## How to use it
+An example notebook named "sandbox_bw25.ipynb" can be used to get started with the functionalities of dbex! 
+
+P.S.: Originaly, functionalities were developed for brithway2 and relied on lca_algebraic, but we then switch to brightway25 and removed the reliance on lca_algebraic.
+
+## Links to the code and visualization
+
+You can find below some data visualization realised with the dbex toolbox.
+
+A graph for a simple comparison of carbon footprint:
+
+![image info](plot/Carbon_Footprints_comparison.png)
+
+A graph for a multricriteria LCA comparison:
+
+![image info](plot/multi_LCA_comparison.png)
+
+A graph for contribution analysis by susbtances and processes:
+
+![image info](plot/contribution_analysis_example.png)
+
+And finally, an amazing interactive dashboard!!
+
+![image info](plot/Dashboard_2.png)
+
+The dashboard function is taking a very very long time to run due the adapted GraphTraversal function that should not take that long. So there is a huge potential to improve the calculation and also the features of the vizualisation!
+
+## License
+[MIT License](https://github.com/RomainBes/DataVizChallenge/blob/main/LICENSE.md)
 
 
-<div align="center">
-<img src="https://github.com/RomainBes/DataVizChallenge/raw/main/assets/sample.png" height="300"/>
-</div>
 
-
-The current implementation is still a naive "hack" to show that it is working.
-
-
-Recently we discovered the great [`polyviz`](https://github.com/romainsacchi/polyviz), which has several similar functionalities and might provide a better implementation of the recursive supply chain calculations.
