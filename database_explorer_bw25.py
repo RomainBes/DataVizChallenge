@@ -355,6 +355,20 @@ class list_act:
         )
         return app
 
+    def DashBoardFromJSON(self):
+        (
+            df,
+            fig_sunburst_pos,
+            fig_sunburst_neg,
+            fig_waterfall,
+            fig_sankey,
+        ) = calculate_DashBoardFromJSON("kg CO2eq")
+
+        app = plot_DashBoard(
+            df, lca, fig_sunburst_pos, fig_sunburst_neg, fig_waterfall, fig_sankey
+        )
+        return app
+
     # Functions prior to the dashboard
     def plot_sankey(self, i, method, cutoff, amount=1):
         act = self.list_act[i]

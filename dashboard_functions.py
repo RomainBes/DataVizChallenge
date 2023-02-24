@@ -161,9 +161,9 @@ def plot_Sunbursts(df, unit):
     return fig_sunburst_pos, fig_sunburst_neg
 
 
-def plot_WaterFall(trav, unit):
+def plot_WaterFall(edges, unit):
 
-    main_edge = trav["edges"][0]
+    main_edge = edges[0]
     fig_waterfall = go.Figure(
         go.Waterfall(
             orientation="v",
@@ -233,13 +233,69 @@ def calculate_DashBoard(lca, cutoff):
     fig_sunburst_pos, fig_sunburst_neg = plot_Sunbursts(df, unit)
     print("Sunburst ready.")
 
-    fig_waterfall = plot_WaterFall(trav, unit)
+    fig_waterfall = plot_WaterFall(trav["edges"], unit)
     print("Waterfall redy.")
 
     fig_sankey = plot_Sankey(df, unit)
     print("Sankey ready.")
 
     return df, lca, fig_sunburst_pos, fig_sunburst_neg, fig_waterfall, fig_sankey
+
+def calculate_DashBoardFromJSON(unit):
+    import json
+    activities = json.load(open('activities.json'))
+    nodes = json.load(open('nodes.json'))
+    edges = json.load(open('edges.json'))
+
+    # put all edge data in a dataframe to be able to scale the children of multi-parent processes
+    ids = [edge["from"] for edge in edges]
+    labels = [
+        activities[id.split("-")[-1]]["name"]
+        + " ("
+        + activities[id.split("-")[-1]]["location"]
+        + ")"
+        for id in ids
+    ]
+    parent_ids = [""] + [edge["to"] for edge in edges][1:]
+
+    data = dict(
+        ids=ids,
+        label=labels,
+        # location = [act['location'] for act in activities],
+        parent_ids=parent_ids,
+        parent=[
+            activities[id.split("-")[-1]]["name"]
+            + " ("
+            + activities[id.split("-")[-1]]["location"]
+            + ")"
+            if id != ""
+            else ""
+            for id in parent_ids
+        ],
+        labels_short=[label[:18] for label in labels],
+        impact_pos=[edge["impact_pos"] for edge in edges],
+        impact_neg=[edge["impact_neg"] for edge in edges],
+        impact=[edge["impact"] for edge in edges],
+        flow_amount=[edge["amount"] for edge in edges]
+        # value_pct = value_pct
+    )
+    df = pd.DataFrame.from_dict(data)
+
+    df = separate_multiple_parent(df)
+    print("Multiple parent separated.")
+
+    data = df.to_dict(orient="list")
+
+    fig_sunburst_pos, fig_sunburst_neg = plot_Sunbursts(df, unit)
+    print("Sunburst ready.")
+
+    fig_waterfall = plot_WaterFall(edges, unit)
+    print("Waterfall redy.")
+
+    fig_sankey = plot_Sankey(df, unit)
+    print("Sankey ready.")
+
+    return df, fig_sunburst_pos, fig_sunburst_neg, fig_waterfall, fig_sankey
 
 
 def plot_DashBoard(
