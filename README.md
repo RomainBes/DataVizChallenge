@@ -16,6 +16,8 @@ P.S.: Originaly, functionalities were developed for brithway2 and relied on lca_
 
 ## Links to the code and visualization
 
+An [simplified online version](http://alfalcadataviz.pythonanywhere.com/) is available to see the dashboard.
+
 You can find below some data visualization realised with the dbex toolbox.
 
 A graph for a simple comparison of carbon footprint:
@@ -35,6 +37,8 @@ And finally, an amazing interactive dashboard!!
 ![image info](plot/Dashboard_2.png)
 
 The dashboard function is taking a very very long time to run due the adapted GraphTraversal function that should not take that long. So there is a huge potential to improve the calculation and also the features of the vizualisation!
+
+To see the result without the need to run the code, you can visit http://alfalcadataviz.pythonanywhere.com/
 
 ## License
 [MIT License](https://github.com/RomainBes/DataVizChallenge/blob/main/LICENSE.md)
